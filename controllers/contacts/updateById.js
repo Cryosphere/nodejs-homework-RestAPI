@@ -1,6 +1,6 @@
-const contactsOperations = require('../../models/contacts');
+const { Contacts } = require("../../models/index");
 
-const Joi = require('joi');
+const Joi = require("joi");
 
 const productSchema = Joi.object({
   name: Joi.string().required(),
@@ -16,16 +16,18 @@ const updateById = async (req, res, next) => {
       throw error;
     }
     const { contactId } = req.params;
-    const result = await contactsOperations.updateContact(contactId, req.body);
+    const result = await Contacts.findByIdAndUpdate(contactId, req.body, {
+      new: true,
+    });
     if (!result) {
-      const error = new Error('missing fields');
+      const error = new Error("missing fields");
       error.status = 404;
       throw error;
     }
     res.json({
-      status: 'success',
+      status: "success",
       code: 201,
-      message: 'missing fields',
+      message: "missing fields",
       data: {
         result,
       },
