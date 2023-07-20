@@ -1,6 +1,6 @@
-const contactsOperations = require('../../models/contacts');
+const { Contacts } = require("../../models/index");
 
-const Joi = require('joi');
+const Joi = require("joi");
 
 const productSchema = Joi.object({
   name: Joi.string().required(),
@@ -12,13 +12,13 @@ const add = async (req, res, next) => {
   try {
     const { error } = productSchema.validate(req.body);
     if (error) {
-      const error = new Error('missing required name field');
+      const error = new Error("missing required name field");
       error.status = 400;
       throw error;
     }
-    const newContact = await contactsOperations.addContact(req.body);
+    const newContact = await Contacts.create(req.body);
     res.status(201).json({
-      status: 'success',
+      status: "success",
       code: 201,
       data: {
         newContact,
