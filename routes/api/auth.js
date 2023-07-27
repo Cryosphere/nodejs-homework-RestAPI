@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { auth } = require("../../middlewares/index");
+const { auth, upload } = require("../../middlewares/index");
 
 const { auth: ctrl } = require("../../controllers/index");
 
