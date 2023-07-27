@@ -4,7 +4,6 @@ const getById = async (req, res, next) => {
   try {
     const { contactId } = req.params;
     const contact = await Contacts.findById(contactId);
-    console.log(contact);
     if (contact) {
       res.json({
         status: "success",
