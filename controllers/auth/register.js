@@ -34,7 +34,9 @@ const register = async (req, res, next) => {
     });
     console.log(result);
 
-    emailService(email, verificationToken);
+    const mailSend = emailService(email);
+
+    console.log(mailSend);
 
     res.status(201).json({
       status: "success",
