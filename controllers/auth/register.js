@@ -4,7 +4,7 @@ const { joiSchema } = require("../../models/users");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const { v4 } = require("uuid");
-const { emailService } = require("../../helpers");
+const { sendEmail } = require("../../helpers");
 
 const register = async (req, res, next) => {
   try {
@@ -34,9 +34,7 @@ const register = async (req, res, next) => {
     });
     console.log(result);
 
-    const mailSend = emailService(email);
-
-    console.log(mailSend);
+    await sendEmail(email);
 
     res.status(201).json({
       status: "success",

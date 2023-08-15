@@ -1,5 +1,5 @@
-const emailService = require("./emailVerify");
+const sendEmail = require("./semdEmail");
 
 module.exports = {
-  emailService,
+  sendEmail,
 };
