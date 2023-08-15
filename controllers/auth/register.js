@@ -4,7 +4,7 @@ const { joiSchema } = require("../../models/users");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const { v4 } = require("uuid");
-const { sendEmail } = require("../../helpers");
+const sendEmail = require("../../helpers");
 
 const register = async (req, res, next) => {
   try {
