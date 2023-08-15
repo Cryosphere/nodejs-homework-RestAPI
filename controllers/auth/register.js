@@ -3,6 +3,8 @@ const { Conflict } = require("http-errors");
 const { joiSchema } = require("../../models/users");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
+const { v4 } = require("uuid");
 
 const register = async (req, res, next) => {
   try {
@@ -19,6 +21,8 @@ const register = async (req, res, next) => {
       throw new Conflict("Email in use");
     }
 
+    const verificationToken = v4();
+
     const avatarURL = gravatar.url(email);
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     const result = await User.create({
@@ -26,8 +30,29 @@ const register = async (req, res, next) => {
       password: hashPassword,
       subscription,
       avatarURL,
+      verificationToken,
     });
     console.log(result);
+
+    const emailTransport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USERNAME,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const emailConfig = {
+      from: "Contacts App Admin <admin.example.com>",
+      to: email,
+      subject: "Подтверждение email",
+      html: `<a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${verificationToken}'>Подтвердить email</a>`,
+    };
+
+    await emailTransport
+      .sendMail(emailConfig)
+      .then(() => console.log("Email send success"))
+      .catch((error) => console.log(error));
 
     res.status(201).json({
       status: "success",
