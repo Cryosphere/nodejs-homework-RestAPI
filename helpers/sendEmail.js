@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const { User } = require("../models/index");
 
-async function sendEmail(email) {
+const sendEmail = async (email) => {
   const user = await User.findOne({ email });
   const emailTransport = nodemailer.createTransport({
     service: "Gmail",
@@ -23,7 +23,7 @@ async function sendEmail(email) {
     .then(() => console.log("Email send success"))
     .catch((error) => console.log(error));
   return true;
-}
+};
 
 module.exports = {
   sendEmail,
