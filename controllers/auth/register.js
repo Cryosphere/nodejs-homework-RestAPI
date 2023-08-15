@@ -35,8 +35,7 @@ const register = async (req, res, next) => {
     console.log(result);
 
     const emailTransport = nodemailer.createTransport({
-      host: "smtp.office365.com",
-      port: 587,
+      service: "hotmail",
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
