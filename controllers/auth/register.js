@@ -35,7 +35,7 @@ const register = async (req, res, next) => {
     console.log(result);
 
     const emailTransport = nodemailer.createTransport({
-      service: "gmail",
+      service: "hotmail",
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
