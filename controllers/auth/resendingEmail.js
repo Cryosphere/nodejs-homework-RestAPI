@@ -29,7 +29,7 @@ const resendingEmail = async (req, res, next) => {
       from: "Contacts App Admin <admin.example.com>",
       to: email,
       subject: "Подтверждение email",
-      html: `<a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/'>Подтвердить email</a>`,
+      html: `<a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${user.verificationToken}'>Подтвердить email</a>`,
     };
 
     await emailTransport

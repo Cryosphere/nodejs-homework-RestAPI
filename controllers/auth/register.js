@@ -3,8 +3,8 @@ const { Conflict } = require("http-errors");
 const { joiSchema } = require("../../models/users");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
 const { v4 } = require("uuid");
+const { emailService } = require("../../helpers");
 
 const register = async (req, res, next) => {
   try {
@@ -34,25 +34,7 @@ const register = async (req, res, next) => {
     });
     console.log(result);
 
-    const emailTransport = nodemailer.createTransport({
-      service: "Gmail",
-      auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-    });
-
-    const emailConfig = {
-      from: "Contacts App Admin <admin.example.com>",
-      to: email,
-      subject: "Подтверждение email",
-      html: `<a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${verificationToken}'>Подтвердить email</a>`,
-    };
-
-    await emailTransport
-      .sendMail(emailConfig)
-      .then(() => console.log("Email send success"))
-      .catch((error) => console.log(error));
+    emailService(email, verificationToken);
 
     res.status(201).json({
       status: "success",
