@@ -22,6 +22,7 @@ async function sendEmail(email) {
     .sendMail(emailConfig)
     .then(() => console.log("Email send success"))
     .catch((error) => console.log(error));
+  return true;
 }
 
 module.exports = {

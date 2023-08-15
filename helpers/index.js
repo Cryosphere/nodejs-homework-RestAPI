@@ -1,4 +1,4 @@
-const sendEmail = require("./semdEmail");
+const sendEmail = require("./sendEmail");
 
 module.exports = {
   sendEmail,
