@@ -18,8 +18,7 @@ const resendingEmail = async (req, res, next) => {
     }
 
     const emailTransport = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
+      service: "Gmail",
       auth: {
         user: process.env.EMAIL_USERNAME,
         pass: process.env.EMAIL_PASSWORD,
@@ -30,7 +29,7 @@ const resendingEmail = async (req, res, next) => {
       from: "Contacts App Admin <admin.example.com>",
       to: email,
       subject: "Подтверждение email",
-      html: `<a target='_blanck' href='http://localhost:3000/api/users/verify/${user.verificationToken}'>Подтвердить email</a>`,
+      html: `<a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/'>Подтвердить email</a>`,
     };
 
     await emailTransport
