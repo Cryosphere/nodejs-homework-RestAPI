@@ -1,5 +1,5 @@
 const { User } = require("../../models/index");
-const sendEmail = require("./register");
+const sendEmail = require("../../helpers/sendEmail");
 
 const resendingEmail = async (req, res, next) => {
   try {
