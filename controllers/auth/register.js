@@ -6,6 +6,31 @@ const bcrypt = require("bcryptjs");
 const { v4 } = require("uuid");
 const nodemailer = require("nodemailer");
 
+const sendEmail = async (email, verificationToken) => {
+  const emailTransport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+      // user: "trycifer@gmail.com",
+      // pass: "crprgozpwyxpwbmz",
+    },
+  });
+
+  const emailConfig = {
+    from: "Contacts App Admin <admin.example.com>",
+    to: email,
+    subject: "Подтверждение email",
+    html: ` <p>Please click the button below to verify your email address:</p><a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${verificationToken}'>Verify email</a>`,
+  };
+
+  await emailTransport
+    .sendMail(emailConfig)
+    .then(() => console.log("Email send success"))
+    .catch((error) => console.log(error));
+  return true;
+};
+
 const register = async (req, res, next) => {
   try {
     const { error } = joiSchema.validate(req.body);
@@ -34,29 +59,6 @@ const register = async (req, res, next) => {
     });
     console.log(result);
 
-    const sendEmail = async (email, verificationToken) => {
-      const emailTransport = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: process.env.EMAIL_USERNAME,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      });
-
-      const emailConfig = {
-        from: "Contacts App Admin <admin.example.com>",
-        to: email,
-        subject: "Подтверждение email",
-        html: ` <p>Please click the button below to verify your email address:</p><a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${verificationToken}'>Verify email</a>`,
-      };
-
-      await emailTransport
-        .sendMail(emailConfig)
-        .then(() => console.log("Email send success"))
-        .catch((error) => console.log(error));
-      return true;
-    };
-
     await sendEmail(email, verificationToken);
 
     res.status(201).json({
@@ -78,4 +80,5 @@ const register = async (req, res, next) => {
 
 module.exports = {
   register,
+  sendEmail,
 };

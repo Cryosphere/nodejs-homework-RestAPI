@@ -6,7 +6,7 @@ const { auth, upload } = require("../../middlewares/index");
 
 const { auth: ctrl } = require("../../controllers/index");
 
-router.post("/register", ctrl.register);
+router.post("/register", ctrl.register.register);
 
 router.post("/login", ctrl.login);
 
