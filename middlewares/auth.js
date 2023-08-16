@@ -3,7 +3,6 @@ const { Unauthorized } = require("http-errors");
 const jwt = require("jsonwebtoken");
 
 const { SECRET_KEY } = process.env;
-// const SECRET_KEY = "r8S497ux79ux";
 
 const auth = async (req, res, next) => {
   const { authorization = "" } = req.headers;

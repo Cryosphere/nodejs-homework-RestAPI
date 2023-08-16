@@ -4,9 +4,6 @@ const fs = require("fs").promises;
 const path = require("path");
 
 const { DB_HOST, PORT } = process.env;
-// const DB_HOST =
-//   "mongodb+srv://cryo:TWrmkL6b79@cluster.knf6fvq.mongodb.net/db-contacts?retryWrites=true&w=majority";
-// const PORT = 3000;
 const tempDir = path.join(process.cwd(), "tmp");
 const avatarsDir = path.join(process.cwd(), "public", "avatars");
 
