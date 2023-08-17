@@ -53,7 +53,4 @@ const register = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  register,
-  sendEmail,
-};
+module.exports = register;
