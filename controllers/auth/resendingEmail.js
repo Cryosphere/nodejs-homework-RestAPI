@@ -1,5 +1,5 @@
 const { User } = require("../../models/index");
-const { sendEmail } = require("../../helpers");
+const sendEmail = require("../../utils/sendEmail");
 
 const resendingEmail = async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ const resendingEmail = async (req, res, next) => {
       throw error;
     }
 
-    await sendEmail(email);
+    await sendEmail(email, user.verificationToken);
 
     res.json({
       message: "Verification email sent",

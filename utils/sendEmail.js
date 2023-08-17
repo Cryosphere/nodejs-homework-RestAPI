@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
-const { User } = require("../models/index");
 
-const sendEmail = async (email) => {
-  const user = await User.findOne({ email });
+const sendEmail = async (email, verificationToken) => {
   const emailTransport = nodemailer.createTransport({
     service: "Gmail",
     auth: {
@@ -15,7 +13,7 @@ const sendEmail = async (email) => {
     from: "Contacts App Admin <admin.example.com>",
     to: email,
     subject: "Подтверждение email",
-    html: `<a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${user.verificationToken}'>Подтвердить email</a>`,
+    html: ` <p>Please click the button below to verify your email address:</p><a target='_blanck' href='https://contacts-fh3s.onrender.com/users/verify/${verificationToken}'>Verify email</a>`,
   };
 
   await emailTransport
@@ -25,6 +23,4 @@ const sendEmail = async (email) => {
   return true;
 };
 
-module.exports = {
-  sendEmail,
-};
+module.exports = sendEmail;
